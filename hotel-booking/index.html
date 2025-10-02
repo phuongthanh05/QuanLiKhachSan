@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hotel Booking System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-container">
+    <div class="login-card">
+      <div class="login-left">
+        <div class="logo-large">🏨</div>
+        <div class="system-title">Hotel Booking System</div>
+        <div class="system-subtitle">Premium Edition</div>
+        <div class="system-description">Hệ Thống Quản Lý & Đặt Phòng Khách Sạn Thông Minh</div>
+        <div class="benefits">
+          <div class="benefit-item">✓ Đặt phòng trực tuyến dễ dàng</div>
+          <div class="benefit-item">✓ Quản lý booking thời gian thực</div>
+          <div class="benefit-item">✓ Hỗ trợ khách hàng 24/7</div>
+        </div>
+      </div>
+      <div class="login-right">
+        <h2>Đăng Nhập Hệ Thống</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Mật khẩu</label>
+            <div class="password-container">
+              <input type="password" id="login-password" required>
+              <button type="button" id="toggle-password" class="toggle-password">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="login-btn primary">Đăng Nhập</button>
+        </form>
+        
+        <div class="demo-accounts">
+          <h4>Tài khoản demo:</h4>
+          <div class="demo-account" data-email="admin@hotel.com" data-password="admin123">
+            <strong>Admin:</strong> admin@hotel.com / admin123
+          </div>
+          <div class="demo-account" data-email="manager@hotel.com" data-password="manager123">
+            <strong>Manager:</strong> manager@hotel.com / manager123
+          </div>
+          <div class="demo-account" data-email="staff@hotel.com" data-password="staff123">
+            <strong>Staff:</strong> staff@hotel.com / staff123
+          </div>
+          <div class="demo-account" data-email="customer@email.com" data-password="123456">
+            <strong>Khách hàng:</strong> customer@email.com / 123456
+          </div>
+        </div>
+        
+        <div class="register-link">
+          Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Screen -->
+  <div id="register-screen" class="login-container hidden">
+    <div class="login-card">
+      <div class="login-left">
+        <div class="logo-large">🏨</div>
+        <div class="system-title">Hotel Booking System</div>
+        <div class="system-subtitle">Đăng ký thành viên</div>
+        <div class="system-description">Tham gia hệ thống để trải nghiệm dịch vụ đặt phòng tốt nhất</div>
+      </div>
+      <div class="login-right">
+        <h2>Đăng Ký Tài Khoản</h2>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-name">Họ và tên *</label>
+            <input type="text" id="register-name" required>
+          </div>
+          <div class="form-group">
+            <label for="register-email">Email *</label>
+            <input type="email" id="register-email" required>
+          </div>
+          <div class="form-group">
+            <label for="register-phone">Số điện thoại *</label>
+            <input type="text" id="register-phone" required>
+          </div>
+          <div class="form-group">
+            <label for="register-address">Địa chỉ</label>
+            <input type="text" id="register-address">
+          </div>
+          <div class="form-group">
+            <label for="register-password">Mật khẩu *</label>
+            <input type="password" id="register-password" required>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm">Xác nhận mật khẩu *</label>
+            <input type="password" id="register-confirm" required>
+          </div>
+          <button type="submit" class="login-btn primary">Đăng Ký</button>
+        </form>
+        
+        <div class="register-link">
+          Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application -->
+  <div id="main-app" class="hidden">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🏨</div>
+        <div class="title">Hotel Booking System</div>
+      </div>
+      
+      <!-- Navigation for all users -->
+      <nav class="nav">
+        <button data-section="dashboard" class="nav-btn active">Trang chủ</button>
+        <button data-section="booking" class="nav-btn">Đặt phòng</button>
+        <button data-section="my-bookings" class="nav-btn">Đơn đặt của tôi</button>
+        
+        <!-- Management sections (only for staff roles) -->
+        <button data-section="rooms" class="nav-btn" data-role="staff">Quản lý phòng</button>
+        <button data-section="services" class="nav-btn" data-role="staff">Dịch vụ</button>
+        <button data-section="bookings" class="nav-btn" data-role="staff">Quản lý đặt phòng</button>
+        <button data-section="users" class="nav-btn" data-role="admin">Quản lý người dùng</button>
+        <button data-section="payments" class="nav-btn" data-role="staff">Thanh toán</button>
+      </nav>
+      
+      <div class="user-info">
+        <span id="current-user">Xin chào, User</span>
+        <span id="user-role" class="user-role">Khách hàng</span>
+        <button id="btn-logout" class="logout-btn">Đăng xuất</button>
+      </div>
+    </header>
+
+    <main id="app" class="container">
+      <!-- DASHBOARD - Common for all users -->
+      <section id="dashboard" class="section">
+        <div class="dashboard-header">
+          <h2>Trang chủ</h2>
+          <div class="welcome-message" id="welcome-message">
+            Chào mừng bạn đến với hệ thống đặt phòng khách sạn
+          </div>
+        </div>
+        
+        <!-- Quick Stats for all users -->
+        <div class="cards">
+          <div class="card">
+            <div class="num" id="stat-available-rooms">0</div>
+            <div class="label">Phòng trống</div>
+          </div>
+          <div class="card">
+            <div class="num" id="stat-my-bookings">0</div>
+            <div class="label">Đơn đặt của tôi</div>
+          </div>
+          <div class="card" data-role="staff">
+            <div class="num" id="stat-total-bookings">0</div>
+            <div class="label">Tổng đơn đặt</div>
+          </div>
+          <div class="card" data-role="staff">
+            <div class="num" id="stat-pending-payments">0</div>
+            <div class="label">Chờ thanh toán</div>
+          </div>
+        </div>
+
+        <!-- Featured Rooms for Customers -->
+        <div class="featured-rooms" id="featured-rooms">
+          <h3>Phòng nổi bật</h3>
+          <div class="rooms-grid" id="rooms-grid">
+            <!-- Rooms will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Quick Actions for Staff -->
+        <div class="quick-actions" data-role="staff" id="quick-actions">
+          <h3>Thao tác nhanh</h3>
+          <div class="action-buttons">
+            <button class="action-btn primary" data-section="booking">
+              <span class="icon">➕</span>
+              <span>Tạo đặt phòng</span>
+            </button>
+            <button class="action-btn" data-section="rooms">
+              <span class="icon">🏨</span>
+              <span>Quản lý phòng</span>
+            </button>
+            <button class="action-btn" data-section="bookings">
+              <span class="icon">📋</span>
+              <span>Xem đơn đặt</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOKING SECTION - For all users -->
+      <section id="booking" class="section hidden">
+        <div class="section-header">
+          <h2>Đặt phòng</h2>
+        </div>
+        
+        <div class="booking-container">
+          <div class="booking-form">
+            <h3>Thông tin đặt phòng</h3>
+            <form id="booking-form">
+              <div class="form-row">
+                <div class="form-col">
+                  <label for="check-in">Ngày nhận phòng *</label>
+                  <input type="date" id="check-in" required>
+                </div>
+                <div class="form-col">
+                  <label for="check-out">Ngày trả phòng *</label>
+                  <input type="date" id="check-out" required>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-col">
+                  <label for="guests">Số lượng khách *</label>
+                  <select id="guests" required>
+                    <option value="1">1 khách</option>
+                    <option value="2">2 khách</option>
+                    <option value="3">3 khách</option>
+                    <option value="4">4 khách</option>
+                  </select>
+                </div>
+                <div class="form-col">
+                  <label for="room-type">Loại phòng</label>
+                  <select id="room-type">
+                    <option value="">Tất cả loại phòng</option>
+                  </select>
+                </div>
+              </div>
+              
+              <button type="submit" class="primary search-btn">Tìm phòng trống</button>
+            </form>
+          </div>
+          
+          <div class="available-rooms" id="available-rooms">
+            <!-- Available rooms will be displayed here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- MY BOOKINGS - For customers -->
+      <section id="my-bookings" class="section hidden">
+        <div class="section-header">
+          <h2>Đơn đặt của tôi</h2>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-my-bookings">
+            <thead>
+              <tr>
+                <th>Mã đơn</th>
+                <th>Phòng</th>
+                <th>Ngày nhận</th>
+                <th>Ngày trả</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ROOMS MANAGEMENT - For staff -->
+      <section id="rooms" class="section hidden">
+        <div class="section-header">
+          <h2>Quản lý phòng</h2>
+          <div>
+            <button id="btn-new-room" class="primary">+ Thêm phòng</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-rooms">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Số phòng</th>
+                <th>Loại phòng</th>
+                <th>Tình trạng</th>
+                <th>Giá/đêm</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SERVICES - For staff -->
+      <section id="services" class="section hidden">
+        <div class="section-header">
+          <h2>Quản lý dịch vụ</h2>
+          <div>
+            <button id="btn-new-service" class="primary">+ Thêm dịch vụ</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-services">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tên dịch vụ</th>
+                <th>Giá</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BOOKINGS MANAGEMENT - For staff -->
+      <section id="bookings" class="section hidden">
+        <div class="section-header">
+          <h2>Quản lý đặt phòng</h2>
+          <div>
+            <button id="btn-new-booking" class="primary">+ Tạo đặt phòng</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-bookings">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Khách hàng</th>
+                <th>Phòng</th>
+                <th>Ngày nhận</th>
+                <th>Ngày trả</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- USERS MANAGEMENT - For admin only -->
+      <section id="users" class="section hidden">
+        <div class="section-header">
+          <h2>Quản lý người dùng</h2>
+          <div>
+            <button id="btn-new-user" class="primary">+ Thêm người dùng</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-users">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Vai trò</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PAYMENTS - For staff -->
+      <section id="payments" class="section hidden">
+        <div class="section-header">
+          <h2>Quản lý thanh toán</h2>
+          <div>
+            <button id="btn-new-payment" class="primary">+ Thêm thanh toán</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-payments">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Mã đơn</th>
+                <th>Số tiền</th>
+                <th>Phương thức</th>
+                <th>Ngày thanh toán</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Hotel Booking System</h4>
+          <p>Hệ thống đặt phòng và quản lý khách sạn chuyên nghiệp</p>
+        </div>
+        <div class="footer-section">
+          <h4>Liên hệ</h4>
+          <p>Email: info@hotelbooking.com</p>
+          <p>Điện thoại: 028-1234-5678</p>
+        </div>
+        <div class="footer-section">
+          <h4>Hỗ trợ</h4>
+          <p>Hướng dẫn sử dụng</p>
+          <p>Câu hỏi thường gặp</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Hotel Booking System - Premium Edition
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODALS -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Form</h3>
+        <button id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button id="modal-cancel">Hủy</button>
+        <button id="modal-submit" class="primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
